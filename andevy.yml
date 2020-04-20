@@ -1,0 +1,45 @@
+---
+
+- hosts: localhost
+  tasks:
+
+  - name: Set timezone to Europe/Amsterdam
+    timezone:
+      name: Europe/Amsterdam
+
+  - name: Updating Ubuntu packages to the latest version first
+    apt:
+        name: "*"
+        state: latest
+    
+  - name: Install git
+    apt:
+        name: git
+        state: latest
+    
+  - name: Install pip3
+    apt:
+        name: python3-pip
+        state: latest
+
+  - name: Install Ansible
+    pip:
+        name: ansible
+
+  - name: Install sshpass
+    apt:
+        name: sshpass
+        state: latest
+
+  - name: Autoclean useless packages from cache
+    apt:
+        autoclean: yes
+    
+  - name: Autoremove dependencies that are no longer required
+    apt:
+        autoremove: yes
+
+
+# Set variable to disable hostkey checking
+# export ANSIBLE_HOST_KEY_CHECKING=false
+
