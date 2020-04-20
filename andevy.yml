@@ -1,5 +1,10 @@
 ---
 
+# AnDEVy - A playbook to install Ansible and git on a fresh Ubuntu box
+# Written by Jordy de Muijnk and tested on Ubuntu 20.04 LTS
+# Twitter: @manderait
+# Feel free to use, modify and distribute
+
 - hosts: localhost
   tasks:
 
@@ -30,7 +35,11 @@
     apt:
         name: sshpass
         state: latest
-
+        
+  - name: Install Brackets
+    apt:
+        deb: "{{ playbook_dir }}/tools/Brackets-1_14_1.deb"
+        
   - name: Autoclean useless packages from cache
     apt:
         autoclean: yes
