@@ -5,49 +5,45 @@
 # Twitter: @manderait
 # Feel free to use, modify and distribute
 
-- hosts: localhost
+- hosts: server1
   tasks:
 
   - name: Set timezone to Europe/Amsterdam
-    timezone:
-      name: Europe/Amsterdam
+    command: timedatectl set-timezone Europe/Amsterdam
+    become: true
 
   - name: Updating Ubuntu packages to the latest version first
     apt:
         name: "*"
         state: latest
-    
+    become: true
+        
   - name: Install git
-    apt:
-        name: git
-        state: latest
-    
+    package: name=git state=latest
+    become: true
+ 
   - name: Install pip3
-    apt:
-        name: python3-pip
-        state: latest
+    package: name=python3-pip state=latest
+    become: true
 
   - name: Install Ansible
     pip:
         name: ansible
-
-  - name: Install sshpass
-    apt:
-        name: sshpass
-        state: latest
-        
-  - name: Install Brackets
-    apt:
-        deb: "{{ playbook_dir }}/tools/Brackets-1_14_1.deb"
+    
+#  - name: Install Brackets
+#    apt:
+#        deb: "{{ playbook_dir }}/tools/Brackets-1_14_1.deb"
+#        become: true
         
   - name: Autoclean useless packages from cache
     apt:
         autoclean: yes
-    
+    become: true
+            
   - name: Autoremove dependencies that are no longer required
     apt:
         autoremove: yes
-
+    become: true    
 
 # Set variable to disable hostkey checking
 # export ANSIBLE_HOST_KEY_CHECKING=false
