@@ -46,7 +46,7 @@
 #  - name: Change directory to the /tools directory & install Brackets
 #    shell: 
 #      cmd: cd ~/Downloads/ansible-playbooks/tools
-#      cmd: sudo dpkg -i Brackets-1_14_1.deb --force-all
+#      cmd: sudo dpkg -i Brackets-1_14_1.deb
     
   - name: Autoclean useless packages from cache
     apt:
