@@ -29,12 +29,25 @@
   - name: Install Ansible
     pip:
         name: ansible
+           
+  - name: Cloning Git-repository AnDEVy to managed node
+    command: git clone https://github.com/manderait/ansible-playbooks.git
+    args:
+      chdir: ~/Downloads/
+
+  - name: Installing dependencies for Brackets
+    package: name=libcurl4 state=latest
+    package: name=libgconf-2-4 state=latest
+    package: name=gconf-service state=latest
+    become: true
+
+#   Unfortunately this section is not working on Ubuntu 20.04 LTS Beta. Playbooks hangs when executed. Manual install works fine.
     
-#  - name: Install Brackets
-#    apt:
-#        deb: "{{ playbook_dir }}/tools/Brackets-1_14_1.deb"
-#        become: true
-        
+#  - name: Change directory to the /tools directory & install Brackets
+#    shell: 
+#      cmd: cd ~/Downloads/ansible-playbooks/tools
+#      cmd: sudo dpkg -i Brackets-1_14_1.deb --force-all
+    
   - name: Autoclean useless packages from cache
     apt:
         autoclean: yes
@@ -44,7 +57,8 @@
     apt:
         autoremove: yes
     become: true    
-
-# Set variable to disable hostkey checking
-# export ANSIBLE_HOST_KEY_CHECKING=false
+      
+  - name: Set variable to disable hostkey checking (ONLY USE IN LAB ENVIRONMENTS!)
+    shell: 
+      cmd: export ANSIBLE_HOST_KEY_CHECKING=false
 
